@@ -1,0 +1,115 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+## Module 1 - Assignment 2
+## Sandepogu, Lakshman
+## R and RStudio Refresher Assignment  
+
+
+```{r InstallLoadTidyverse}
+# Load Tidyverse - Task 1  
+# install.packages("tidyverse")
+
+
+library(tidyverse)
+
+# Load diamonds data set - Task 2  
+diamonddata <- diamonds
+
+# Number of rows in diamonddata set
+count(diamonddata)
+
+
+
+
+# Number of observations or columns in diamonddata set
+length(diamonddata)
+
+
+```
+
+```{r CreateScatterPlot }
+# Create ScatterPlot - Task 3 
+
+ggplot(data=diamonddata, aes(x=carat, y=price)) +
+  geom_point() +
+  theme_bw()
+
+```
+
+
+Based on the above scatter plot, the price of the diamond appears to be dependent on the weight of the carat attribute of the diamond. Most of the diamonds are in the 0.2 to till 2.5 carat weight and few are scatter after 2.5 carat weight. Between 2.5 to 5.1 carat weight, few diamonds are scattered. 
+
+
+```{r PlotColor}
+# Create Scatter Plot - Task 4 
+
+ggplot(data=diamonddata, aes(x=carat, y=price, color=cut)) +
+  geom_point() +
+  theme_bw()
+
+```
+
+Based on the above scatter plot, the ideal color diamonds are spread mostly in 0.2 to 2.5 carat weight and the same is true for the Premium color diamonds. Between 1.0 to 2.5 the price variation is quite large for most of the diamonds. The fair color diamonds are few but their price appears to be more dependent on the carat weight.
+
+
+```{r ByFacetColor }
+# Create ScatterPlot facet color - Task 5 
+
+sp <- ggplot(data=diamonddata, aes(x=carat, y=price, color=cut)) + geom_point() + theme_bw()
+ 
+sp + facet_grid(. ~ color )
+
+
+```
+
+The facet shows the portioning a plot into a matrix of panels, each panel lists different subset of data.
+Based on the above, appears the Fair color diamonds shows more carat weight category in all the panels. The other colors have similar price range for the similar category of the carat weights.
+
+
+
+```{r LoadInventory}
+# Load Inventory Data - Task 6 
+
+inventory <- read_csv("InventoryData.csv")
+
+str(inventory) # Structure of the data frame
+summary(inventory) # Summary of the data frame
+
+
+
+```
+```{r FilterData }
+# Filter Data - Task 7 
+inventoryA <- filter(inventory, Supplier == "A")
+
+# Rows in the new dataframe
+count(inventoryA)
+
+# Mutate - Task 8 
+inventoryA <- mutate(inventoryA, OnHandRatio = `On Hand` / `Annual Demand`)
+
+# The above statement basically creates a new observation called OnHandRatio, which is calculated by dividing "On Hand" variable with "Annual Demand".
+
+
+# average cost calculation - Task 9 
+
+avg_cost<- inventory %>% group_by(`Item SKU`) %>% summarise(SKUAvgCost = mean(`Cost per Unit ($)`))
+head(avg_cost)
+
+```
+
+
+Task 10: Given your previous course experience with R/RStudio, what topics/concepts did you find to be
+most challenging?  
+
+A: During the previous course, it was towards the end where some assignment had the correlation function, based on the results, how to interpret if the variables are highly correlated etc.
+
+Likewise in one of the assignments, was the linear regression formula and how to interpret the results and also significant variable has any impact on other dependent variables etc.
+
+Likewise the concept of Group comparisions with t-tests.
+
+
+
